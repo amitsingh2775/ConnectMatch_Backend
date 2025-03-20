@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "http://localhost:5173/" },transports: ["websocket"],
+const io = new Server(server, { cors: { origin: "https://connect-match-frontend.vercel.app/" },transports: ["websocket"],
   pingInterval: 60000,
   pingTimeout: 20000,});
 const port=8000
