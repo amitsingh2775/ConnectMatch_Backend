@@ -5,14 +5,27 @@ const { redisClient, publisher, preferenceSubscriber, messageSubscriber } = requ
 const setupSocketHandlers = require("./socketHandlers");
 const createSubscriberForPreference = require("./preferenceSubscriber");
 require('dotenv').config();
+const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "http://localhost:5173/" },transports: ["websocket"],
+const io = new Server(server, { 
+  cors: { 
+    origin: "https://connect-match-frontend.vercel.app",
+    methods: ["GET", "POST"],
+    credentials: true 
+  },
   pingInterval: 60000,
-  pingTimeout: 20000,});
-const port=8000
+  pingTimeout: 20000,
+});
 
+const port = process.env.PORT || 3000;
+
+app.use(cors({
+  origin: "https://connect-match-frontend.vercel.app",
+  methods: ["GET", "POST"],
+  credentials: true,
+}));
 app.use(express.json());
 app.get("/", (req, res) => res.send("Redis-based chat server is running!"));
 
@@ -46,7 +59,6 @@ io.on("connection", (socket) => {
   });
 })();
 
-// Setup preference subscribers for specific topics
 ["Coding", "Science", "Music", "Jobs"].forEach((preference) => {
   createSubscriberForPreference(preference, io, redisClient);
 });
