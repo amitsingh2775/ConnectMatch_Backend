@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { 
   cors: { 
-    origin: "https://connect-match-frontend.vercel.app",
+    origin: "https://connectmatch.vercel.app",
     methods: ["GET", "POST"],
     credentials: true 
   },
@@ -22,7 +22,7 @@ const io = new Server(server, {
 const port = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: "https://connect-match-frontend.vercel.app",
+  origin: "https://connectmatch.vercel.app",
   methods: ["GET", "POST"],
   credentials: true,
 }));
