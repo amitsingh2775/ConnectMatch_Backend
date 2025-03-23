@@ -122,6 +122,7 @@ function setupSocketHandlers(io, socket, redisClient) {
       await updateRoomStatus(roomID, io, redisClient);
     }
     await redisClient.del(`user-room:${userId}`);
+    await redisClient.del(`user:${userId}`); // added this line
   });
 
   // CHANGED: Fixed event name and added proper response for "Delete for Me"
